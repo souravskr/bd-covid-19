@@ -17,8 +17,16 @@ const graph = svg
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 const xScale = d3.scaleTime().range([0, innerWidth]).nice();
 const yScale = d3.scaleLinear().range([innerHeight, 0]).nice();
-const xAxis = d3.axisBottom(xScale).tickSize(-innerHeight).tickPadding(15);
-const yAxis = d3.axisLeft(yScale).tickSize(-innerWidth).tickPadding(10);
+const xAxis = d3
+    .axisBottom(xScale)
+    .tickSize(-innerHeight)
+    .tickPadding(15)
+    .ticks(10);
+const yAxis = d3
+    .axisLeft(yScale)
+    .tickSize(-innerWidth)
+    .tickPadding(10)
+    .ticks(30);
 const xAxisG = graph
     .append('g')
     .attr('transform', `translate(${0}, ${innerHeight})`);
@@ -72,6 +80,7 @@ const colorLegend = (selection, props) => {
 };
 
 const render = (data) => {
+    console.log(d3.extent(data, xValue));
     const caseGroup = d3.nest().key(colorValue).entries(data);
     console.log(caseGroup);
     xScale.domain(d3.extent(data, xValue));
